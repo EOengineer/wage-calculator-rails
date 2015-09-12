@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  employees: 1
+  ceo_salary: 1
+  average: 1
+  minumum: 1
+
+two:
+  name: MyString
+  employees: 1
+  ceo_salary: 1
+  average: 1
+  minumum: 1
