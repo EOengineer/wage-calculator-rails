@@ -15,13 +15,43 @@
 //= require turbolinks
 //= require_tree .
 
+
+
 $(document).ready(function() {
+
+  // make ajax request for data
   $.ajax({
     type: "GET",
     dataType: "json",
     url: "/companies",
     success: function(data){
-      console.log(data);
+
+      // get outer container
+      var outerCompContainer = document.getElementById("companies-container");
+
+      // iterate over companies array
+      for ( var i = 0, l = data.length; i < l; i++ ) {
+
+        // create inner div
+        var companyContainer = document.createElement('div');
+        companyContainer.id = data[i].name + "-container";
+        outerCompContainer.appendChild(companyContainer);
+
+        // get each company's container
+        var innerCompany = document.getElementById(data[i].name + "-container");
+
+        // create the rangeslider and set attributes
+        var htmlSlider = document.createElement("INPUT");
+        htmlSlider.type = 'range';
+        htmlSlider.min = 0;
+        htmlSlider.max = 100;
+        htmlSlider.step = 1;
+        htmlSlider.id = data[i].name + "-slider";
+        innerCompany.appendChild(htmlSlider);
+
+      }
+
     }
   });
 })
+
