@@ -16,6 +16,28 @@
 //= require_tree .
 
 
+function createSlider(parent, dataObject) {
+  var htmlSlider = document.createElement("INPUT");
+    htmlSlider.type = 'range';
+    htmlSlider.min = 0;
+    htmlSlider.max = 100;
+    htmlSlider.step = 1;
+    htmlSlider.value = 100;
+    htmlSlider.id = dataObject + "-slider";
+    $(htmlSlider).addClass('rangeslider');
+    parent.appendChild(htmlSlider);
+    // return the element by id
+    return document.getElementById(dataObject + "-slider");
+}
+
+function createDiv(parent, dataObject) {
+  var companyContainer = document.createElement('div');
+    companyContainer.id = dataObject + "-container";
+    parent.appendChild(companyContainer);
+    // return the new element by id
+    return document.getElementById(dataObject + "-container");
+}
+
 
 $(document).ready(function() {
 
@@ -33,24 +55,28 @@ $(document).ready(function() {
       for ( var i = 0, l = data.length; i < l; i++ ) {
 
         // create inner div
-        var companyContainer = document.createElement('div');
-        companyContainer.id = data[i].name + "-container";
-        outerCompContainer.appendChild(companyContainer);
-
-        // get each company's container
-        var innerCompany = document.getElementById(data[i].name + "-container");
+        var innerCompany = createDiv(outerCompContainer, data[i].name)
 
         // create the rangeslider and set attributes
-        var htmlSlider = document.createElement("INPUT");
-        htmlSlider.type = 'range';
-        htmlSlider.min = 0;
-        htmlSlider.max = 100;
-        htmlSlider.step = 1;
-        htmlSlider.id = data[i].name + "-slider";
-        innerCompany.appendChild(htmlSlider);
+        var theSlider = createSlider(innerCompany, data[i].name)
 
+        // create min display
+        var sliderMin = document.createElement('span');
+        $(sliderMin).text(0);
+        $(sliderMin).addClass('slider-min');
+        innerCompany.appendChild(sliderMin);
+
+        // create the output object that will display range percentage
+        var output = document.createElement('output');
+        output.id = data[i].name + "-output";
+        output.value = theSlider.value;
+        innerCompany.appendChild(output);
+
+        // update slider display value
+        $("input[type=range]").click(function() {
+          $(output).text($(this.value).selector);
+        });
       }
-
     }
   });
 })
